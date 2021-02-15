@@ -3,10 +3,7 @@
 
 namespace App\Controller;
 
-
-use App\QuestionsCrawler\QuestionCrawler;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Services\PopulateService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,11 +16,11 @@ class CrawlerController
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      * @Route("/questions", name="questions")
      */
-    public function indexAction(QuestionCrawler $crawler, EntityManagerInterface $entityManager)
+    public function indexAction(PopulateService $populateService)
     {
-        $crawler->getDataFromAPI($entityManager);
+        $populateService->persisting();
 
-        return new Response('hey');
+        return new Response('Done');
     }
 
 }
